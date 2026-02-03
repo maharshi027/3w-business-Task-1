@@ -1,16 +1,21 @@
-import express from'express';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-import dotenv from 'dotenv';
+import connectDB from "./config/db.js";
+import authRoutes from "./src/routes/user.route.js";
+import postRoutes from "./src/routes/post.route.js";
 
-dotenv.config()
+dotenv.config();
+connectDB();
+
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-const PORT= process.env.PORT || 2000;
-app.get('/', (req,res) =>{
-
-})
-
-app.listen(prompt, () => {
-    console.log(`server is running on port ${PORT}`);
-    
-})
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
+const PORT = process.env.PORT || 2500
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}...`);
+});
