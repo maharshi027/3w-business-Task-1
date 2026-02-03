@@ -1,20 +1,28 @@
 import Post from "../models/post.model.js";
 
 export const createPost = async (req, res) => {
-  const { text, image } = req.body;
+  try {
+    const imageUrl = req.file?.path;
 
-  if (!text && !image) {
-    return res.status(400).json({ message: "Post cannot be empty" });
+    if (!imageUrl) {
+      return res.status(400).json({ message: "Image is required" });
+    }
+
+    const post = await Post.create({
+      user: req.user.id,
+      image: imageUrl,
+      caption: req.body.caption,
+    });
+
+    res.status(201).json({
+      message: "Post created successfully",
+      post,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  const post = await Post.create({
-    user: req.user.id,
-    text,
-    image,
-  });
-
-  res.json(post);
 };
+
 
 export const getPosts = async (req, res) => {
   const posts = await Post.find().sort({ createdAt: -1 });
