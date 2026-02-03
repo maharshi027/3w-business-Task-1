@@ -3,6 +3,7 @@ import { signup, login } from "../controllers/user.controller.js";
 import { verifyToken } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
+console.log("hi");
 
 router.post("/signup", signup);
 router.post("/login", login);
