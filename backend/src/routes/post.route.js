@@ -1,5 +1,5 @@
 import express from "express";
-import authMiddleware from "../middleware/auth.middleware.js";
+import { verifyToken } from "../middleware/auth.middleware.js";
 import {
   createPost,
   getPosts,
@@ -11,9 +11,9 @@ import {
 const router = express.Router();
 
 router.get("/", getPosts);
-router.post("/", authMiddleware, createPost);
-router.post("/like/:id", authMiddleware, likePost);
-router.post("/comment/:id", authMiddleware, commentPost);
-router.delete("/:id", authMiddleware, deletePost);
+router.post("/", verifyToken, createPost);
+router.post("/like/:id", verifyToken, likePost);
+router.post("/comment/:id", verifyToken, commentPost);
+router.delete("/:id", verifyToken, deletePost);
 
 export default router;
