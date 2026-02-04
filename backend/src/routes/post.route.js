@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 router.get("/", getPosts);
-router.post("/", verifyToken, upload.array("images", 5)
+router.post("/create-post", verifyToken, upload.array("images", 5)
 , createPost);
 router.post("/like/:id", verifyToken, likePost);
 router.post("/comment/:id", verifyToken, commentPost);

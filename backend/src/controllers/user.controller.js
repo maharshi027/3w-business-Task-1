@@ -1,36 +1,35 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import mongoose from "mongoose";
 /* ______________________________  SIGNUP  ___________________________ */
 
 
 export const signup = async (req, res) => {
-  console.log(req.body);
   
   try {
     const { username, email, password } = req.body;
-    console.log(req.body);
     
     if (!username || !email || !password) {
       return res.status(400).json({
         message: "All fields are required",
       });
     }
-
+    
     if (!email.includes("@")) {
       return res.status(400).json({
         message: "Invalid email format",
       });
     }
-
+    
     const existingUser = await User.findOne({ email });
+    console.log(req.body);
     if (existingUser) {
       return res.status(409).json({
         message: "Email already registered",
       });
     }
-
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({

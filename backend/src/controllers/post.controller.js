@@ -1,6 +1,8 @@
 import Post from "../models/post.model.js";
 
 export const createPost = async (req, res) => {
+  console.log(req.file);
+  
   try {
     const imageUrl = req.file?.path;
 
