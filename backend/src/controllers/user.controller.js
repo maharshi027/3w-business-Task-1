@@ -21,9 +21,7 @@ export const signup = async (req, res) => {
         message: "Invalid email format",
       });
     }
-    
     const existingUser = await User.findOne({ email });
-    console.log(req.body);
     if (existingUser) {
       return res.status(409).json({
         message: "Email already registered",
@@ -68,11 +66,10 @@ export const login = async (req, res) => {
 
     if (!email || !password) {
       return res.status(400).json({
-        message: "Email and password are required",
+        message: "All fields are required",
       });
     }
 
- 
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
