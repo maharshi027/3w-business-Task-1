@@ -59,7 +59,6 @@ export const deletePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    // Authorization check: Only the owner can delete
     if (post.user.toString() !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized to delete this post" });
     }
