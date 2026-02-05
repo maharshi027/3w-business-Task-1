@@ -66,7 +66,25 @@ A full-stack social media platform featuring secure authentication, image upload
 | DELETE | /api/posts/:id | Delete post (Owner only) |
 
 ## 🚀 Deployment
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "2500:2500"
+    env_file:
+      - ./backend/.env
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    restart: always
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: always
+    
 ### Backend
 - Deploy to platforms like Render, Heroku, or Railway.
 - Ensure all environment variables from your `.env` file are added to the platform's settings.
