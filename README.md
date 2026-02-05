@@ -109,3 +109,9 @@ services:
 - Deploy to Vercel or Netlify.
 - Configure the build command as `npm run build` and the output directory as `dist`.
 - Set the API base URL in your Axios configuration to point to your deployed backend.
+
+# Author
+
+- Harshit -
+- harshit.2327cseai120@kiet.edu -
+- 7398XXXXXX -
