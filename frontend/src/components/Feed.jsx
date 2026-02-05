@@ -25,7 +25,7 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="bg-light min-vh-100 py-4">
+    <div className="bg-light min-vh-100 py-4" style={{ marginTop: "56px" }}>
       <Container>
         <Row className="justify-content-center">
           
@@ -55,7 +55,7 @@ const Feed = () => {
           </Col>
 
           <Col lg={4} className="d-none d-lg-block">
-            <div className="sticky-top" style={{ top: "20px" }}>
+            <div className="sticky-top" style={{ top: "80px", zIndex: "1" }}>
               <Card className="border-0 shadow-sm mb-3" style={{ borderRadius: "15px" }}>
                 <Card.Body>
                   <Card.Title className="fw-bold mb-3">💡 About This App</Card.Title>
