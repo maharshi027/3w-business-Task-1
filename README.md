@@ -1,41 +1,56 @@
-# Social Media Application
+# 🚀 Phase 1: Internship Technical Task - 3W Business Pvt Ltd.
 
-A full-stack social media platform featuring secure authentication, image uploads via Cloudinary, and real-time social interactions.
+**Organization:** 3W Business Pvt Ltd.  
+**Task Status:** Post-Resume Shortlisting (Task #1)  
+**Timeline:** 3 Days (72-Hour Challenge)  
+**Constraints:** React + Bootstrap Only (No Custom CSS)
+
+---
+
+# Full-Stack Social Media Application
+
+A robust social media platform featuring secure authentication, cloud-based image uploads, and real-time social interactions. This project was built to demonstrate rapid development capabilities and proficiency in the MERN stack under a professional deadline.
+
+## 📋 Core Requirements Met
+- [x] **Strict Styling:** 100% React-Bootstrap (No custom CSS files or inline styles).
+- [x] **User Auth:** Complete Signup and Login flow.
+- [x] **Interactions:** Like and Comment functionality on posts.
+- [x] **Media:** Image hosting via Cloudinary.
+- [x] **Timeline:** Developed and deployed within the 3-day window.
+
+## 🛠 Tech Stack
+
+- **Frontend:** React.js (Vite), React-Bootstrap, Axios
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB, Mongoose
+- **File Handling:** Multer, Cloudinary API
+- **Security:** JSON Web Tokens (JWT), Bcrypt.js
+
+---
 
 ## 📁 Project Structure
 
 ### Backend
-- **config/**: Database connection setup
-- **controllers/**: Business logic for posts and users
-- **middleware/**: JWT authentication and Multer/Cloudinary storage logic
-- **models/**: Mongoose schemas for MongoDB
-- **routes/**: Express route definitions
-- **utils/**: Cloudinary configuration utilities
-- **index.js**: Entry point for the server
+- `config/`: Database connection (MongoDB)
+- `controllers/`: Logic for user authentication and post management
+- `middleware/`: JWT verification and Multer storage configuration
+- `models/`: Mongoose schemas for Users and Posts
+- `routes/`: Express API endpoints
+- `utils/`: Cloudinary integration utilities
 
 ### Frontend
-- **api/**: Axios instance configuration
-- **components/**: Reusable UI components (PostCard, CreatePost, etc.)
-- **context/**: Global state for user authentication
-- **App.jsx**: Main application routing and layout
+- `api/`: Centralized Axios configuration
+- `components/`: Reusable Bootstrap-only UI components
+- `context/`: Global Auth state management
+- `App.jsx`: Main routing and layout structure
 
-## 🚀 Features
-
-- **User Authentication**: Signup and Login with JWT and password encryption.
-- **Post Creation**: Support for captions and multiple image uploads.
-- **Cloud Storage**: Automatic image optimization and hosting on Cloudinary.
-- **Interactions**: Like/Unlike posts and a threaded comment system.
-- **Security**: Protected frontend routes and backend middleware.
-
-## 🛠 Tech Stack
-
-- **Frontend**: React.js, Vite, Axios, React-Bootstrap
-- **Backend**: Node.js, Express.js, MongoDB, Mongoose
-- **Image Handling**: Multer, Multer-Storage-Cloudinary, Cloudinary API
-- **Auth**: JSON Web Tokens (JWT), Bcrypt.js
+---
 
 ## ⚙️ Installation & Setup
 
+1. **Clone the Repository**
+   ```bash
+   git clone [your-repository-link]
 1. **Clone the repository**
 2. **Backend Setup**:
    - Navigate to the backend folder
@@ -84,7 +99,7 @@ services:
     depends_on:
       - backend
     restart: always
-    
+
 ### Backend
 - Deploy to platforms like Render, Heroku, or Railway.
 - Ensure all environment variables from your `.env` file are added to the platform's settings.
