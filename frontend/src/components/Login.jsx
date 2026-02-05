@@ -1,13 +1,6 @@
 import { useState } from "react";
 import api from "../api/axios";
-import {
-  Card,
-  Form,
-  Button,
-  Spinner,
-  Toast,
-  ToastContainer,
-} from "react-bootstrap";
+import { Card, Form, Button, Spinner, Toast, ToastContainer, Container, FloatingLabel } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -22,94 +15,76 @@ export default function Login() {
 
   const submit = async () => {
     if (!email || !password) {
-      setToast({
-        show: true,
-        message: "Please enter email and password",
-        type: "danger",
-      });
+      setToast({ show: true, message: "Please fill in all fields", type: "danger" });
       return;
     }
 
     try {
       setLoading(true);
-
       const res = await api.post("/auth/login", { email, password });
       login(res.data.token, res.data.username);
-
-      setToast({
-        show: true,
-        message: "Login successful!",
-        type: "success",
-      });
-
-      setTimeout(() => {
-        navigate("/feed");
-      }, 800);
+      setToast({ show: true, message: "Welcome back!", type: "success" });
+      setTimeout(() => navigate("/feed"), 800);
     } catch (err) {
-      setToast({
-        show: true,
-        message: err.response?.data?.message || "Login failed",
-        type: "danger",
-      });
+      setToast({ show: true, message: err.response?.data?.message || "Login failed", type: "danger" });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-      {/* Toast */}
-      <ToastContainer position="top-end" className="p-3">
-        <Toast
-          bg={toast.type}
-          show={toast.show}
-          delay={3000}
-          autohide
-          onClose={() => setToast({ ...toast, show: false })}
-        >
-          <Toast.Body className="text-white">
-            {toast.message}
-          </Toast.Body>
+    <div className="bg-light min-vh-100 d-flex align-items-center py-5">
+      <ToastContainer position="top-center" className="p-3">
+        <Toast bg={toast.type} show={toast.show} delay={3000} autohide onClose={() => setToast({ ...toast, show: false })}>
+          <Toast.Body className="text-white text-center fw-bold">{toast.message}</Toast.Body>
         </Toast>
       </ToastContainer>
 
-      {/* Login Card */}
-      <Card className="p-4 mx-auto" style={{ maxWidth: "420px" }}>
-        <h4 className="text-center mb-3">Login</h4>
+      <Container>
+        <Card className="border-0 shadow-lg mx-auto" style={{ maxWidth: "450px", borderRadius: "20px" }}>
+          <Card.Body className="p-5">
+            <div className="text-center mb-4">
+              <h2 className="fw-bold text-primary">Welcome Back</h2>
+              <p className="text-muted">Log in to your account</p>
+            </div>
 
-        <Form.Control
-          placeholder="Email"
-          type="email"
-          className="mt-2"
-          onChange={e => setEmail(e.target.value)}
-        />
+            <Form>
+              <FloatingLabel label="Email address" className="mb-3">
+                <Form.Control 
+                  type="email" 
+                  placeholder="name@example.com" 
+                  className="border-0 bg-light"
+                  onChange={e => setEmail(e.target.value)} 
+                />
+              </FloatingLabel>
 
-        <Form.Control
-          placeholder="Password"
-          type="password"
-          className="mt-2"
-          onChange={e => setPassword(e.target.value)}
-        />
+              <FloatingLabel label="Password" className="mb-4">
+                <Form.Control 
+                  type="password" 
+                  placeholder="Password" 
+                  className="border-0 bg-light"
+                  onChange={e => setPassword(e.target.value)} 
+                />
+              </FloatingLabel>
 
-        <Button
-          className="mt-3 w-100"
-          onClick={submit}
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <Spinner size="sm" className="me-2" />
-              Logging in...
-            </>
-          ) : (
-            "Login"
-          )}
-        </Button>
+              <Button 
+                variant="primary" 
+                size="lg"
+                className="w-100 shadow-sm mb-4 rounded-pill fw-bold" 
+                onClick={submit} 
+                disabled={loading}
+              >
+                {loading ? <Spinner animation="border" size="sm" /> : "Login"}
+              </Button>
 
-        <div className="text-center mt-3">
-          <Link to="/signup">Don't have an account? Signup</Link>
-        </div>
-      </Card>
-    </>
+              <div className="text-center">
+                <span className="text-muted">New here? </span>
+                <Link to="/signup" className="text-decoration-none fw-bold">Create Account</Link>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 }
