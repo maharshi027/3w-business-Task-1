@@ -1,17 +1,18 @@
 import Post from "../models/post.model.js";
 
 export const createPost = async (req, res) => {
-  
   try {
-    const imageUrl = req.file?.path;
+    const files = req.files;
 
-    if (!imageUrl) {
-      return res.status(400).json({ message: "Image is required" });
+    if (!files || files.length === 0) {
+      return res.status(400).json({ message: "At least one image is required" });
     }
+
+    const imageUrls = files.map(file => file.path);
 
     const post = await Post.create({
       user: req.user.id,
-      image: imageUrl,
+      image: imageUrls,
       caption: req.body.caption,
     });
 
@@ -23,37 +24,49 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 export const getPosts = async (req, res) => {
-  const posts = await Post.find().sort({ createdAt: -1 });
-  res.json(posts);
+  try {
+    const posts = await Post.find()
+      .populate("user", "username profilePic")
+      .sort({ createdAt: -1 });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const likePost = async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" })
+      
+    const index = post.likes.indexOf(req.user.id);
+    if (index === -1) {
+      post.likes.push(req.user.id);
+    } else {
+      post.likes.splice(index, 1);
+    }
 
-  if (!post.likes.includes(req.user.username)) {
-    post.likes.push(req.user.username);
     await post.save();
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-
-  res.json(post);
-};
-
-export const commentPost = async (req, res) => {
-  const post = await Post.findById(req.params.id);
-
-  post.comments.push({
-    username: req.user.username,
-    text: req.body.text,
-  });
-
-  await post.save();
-  res.json(post);
 };
 
 export const deletePost = async (req, res) => {
-  await Post.findByIdAndDelete(req.params.id);
-  res.json({ message: "Post deleted" });
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    // Authorization check: Only the owner can delete
+    if (post.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized to delete this post" });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+    res.json({ message: "Post deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };

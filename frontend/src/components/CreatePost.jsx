@@ -16,16 +16,23 @@ function CreatePost({ fetchPosts }) {
     }
   };
 
-  const submitPost = async () => {
+const submitPost = async () => {
     if (!caption && !image) return;
 
     try {
       setLoading(true);
       const formData = new FormData();
       formData.append("caption", caption);
-      if (image) formData.append("image", image);
+      
+      if (image) {
+        formData.append("images", image); 
+      }
 
-      await api.post("/posts", formData);
+      await api.post("/posts/create-post", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setCaption("");
       setImage(null);
@@ -33,12 +40,11 @@ function CreatePost({ fetchPosts }) {
       
       fetchPosts();
     } catch (err) {
-      console.error("Post failed", err);
+      console.error("Post failed:", err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <Card className="shadow-sm mb-4 border-0" style={{ borderRadius: "15px" }}>
       <Card.Body>
