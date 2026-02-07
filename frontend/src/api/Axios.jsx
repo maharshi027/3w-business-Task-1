@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:2500/api",
+  baseURL: "https://threew-business-task-1.onrender.com/api",
 });
 
 api.interceptors.request.use(config => {
