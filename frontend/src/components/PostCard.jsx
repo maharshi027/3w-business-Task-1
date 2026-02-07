@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Button, Stack, Dropdown, Form } from "react-bootstrap";
-import api from "../api/axios";
+import api from "../api/axios.js";
 import { useAuth } from "../context/AuthContext";
 
 const PostCard = ({ post, refresh }) => {

@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Card, Button, Form, Image, Stack, Badge } from "react-bootstrap";
-import api from "../api/axios";
+import api from "../api/axios.js";
 
 function CreatePost({ fetchPosts }) {
   const [caption, setCaption] = useState("");
