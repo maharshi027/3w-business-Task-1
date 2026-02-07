@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../api/axios.js";
+import api from "../api/Axios";
 import { Card, Form, Button, Spinner, Toast, ToastContainer, Container, FloatingLabel } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 

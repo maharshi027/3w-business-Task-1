@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Spinner, Card, ListGroup } from "react-bootstrap";
-import api from "../api/axios.js";
+import api from "../api/Axios";
 import CreatePost from "./CreatePost";
 import PostCard from "./PostCard";
 
